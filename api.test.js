@@ -80,3 +80,22 @@ describe("[POST] auth/register", () => {
     expect(response.body.message).toBe("Rol adı admin olamaz");
   }, 1000);
 });
+
+describe("[GET] /users",()=>{
+  it("[7] login kullanıcı usersı alabiliyor", async () => {
+    const response = await superTest(server)
+    .post("/api/auth/login")
+    .send({ username: "bob", password: "1234" });
+    const token = response.body.token;
+    const response2 = await superTest(server).get("/api/users").set("Authorization",token);
+    expect(response2.body[0].username).toBe("bob")
+  })
+  it("[8]admin kullanıcısı usersı alabiliyor", async () => {
+    const response = await superTest(server)
+    .post("/api/auth/login")
+    .send({ username: "bob", password: "1234" });
+    const token = response.body.token;
+    const response2 = await superTest(server).get("/api/users/1").set("authorization",token);
+    expect(response2.body.username).toBe("bob")
+  })
+})
