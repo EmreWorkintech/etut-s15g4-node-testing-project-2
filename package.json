@@ -7,7 +7,7 @@
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "test": "jest --verbose",
+    "test": "cross-env NODE_ENV=testing jest --verbose --watchAll --runInBand",
     "resetdb": "knex migrate:rollback && knex migrate:latest && knex seed:run"
   },
   "devDependencies": {
